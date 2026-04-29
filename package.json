@@ -112,7 +112,8 @@
     "openclaw:runtime:linux-x64": "npm run openclaw:ensure && npm run openclaw:patch && node scripts/run-build-openclaw-runtime.cjs linux-x64 && node scripts/sync-openclaw-runtime-current.cjs linux-x64 && npm run openclaw:bundle && npm run openclaw:plugins && npm run openclaw:extensions:local && npm run openclaw:precompile && npm run openclaw:channel-deps && npm run openclaw:prune",
     "openclaw:runtime:linux-arm64": "npm run openclaw:ensure && npm run openclaw:patch && node scripts/run-build-openclaw-runtime.cjs linux-arm64 && node scripts/sync-openclaw-runtime-current.cjs linux-arm64 && npm run openclaw:bundle && npm run openclaw:plugins && npm run openclaw:extensions:local && npm run openclaw:precompile && npm run openclaw:channel-deps && npm run openclaw:prune",
     "regenerate:icon": "bash scripts/regenerate-mac-icon.sh",
-    "fix:mac-icon": "bash scripts/fix-mac-icon-display.sh"
+    "fix:mac-icon": "bash scripts/fix-mac-icon-display.sh",
+    "generate:app-icon": "node scripts/generate-app-icon.js"
   },
   "dependencies": {
     "@electron/remote": "^2.0.12",
@@ -152,7 +153,8 @@
     "utf-8-validate": "^6.0.6",
     "uuid": "^11.1.0",
     "yazl": "^3.3.1",
-    "zod": "^4.3.6"
+    "zod": "^4.3.6",
+    "jimp": "^1.6.0"
   },
   "overrides": {
     "@electron/osx-sign": {

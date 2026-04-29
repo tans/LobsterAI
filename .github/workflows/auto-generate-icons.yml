@@ -1,0 +1,46 @@
+name: Auto Generate Icons
+
+on:
+  push:
+    paths:
+      - 'public/logo.png'
+      - 'scripts/generate-app-icon.js'
+      - 'scripts/generate-tray-icons.js'
+      - '.github/workflows/auto-generate-icons.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-icons:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate app icon
+        run: npm run generate:app-icon
+
+      - name: Generate tray icons
+        run: npm run generate:tray-icons
+
+      - name: Commit generated icons
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(icons): regenerate app and tray icons from logo'
+          file_pattern: |
+            build/icons/win/icon.ico
+            resources/tray/*.png
+            resources/tray/*.ico
