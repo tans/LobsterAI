@@ -109,6 +109,12 @@ function verifyPreinstalledPlugins(runtimeRoot, buildHint) {
     if (!plugin.id) continue;
     const pluginDir = path.join(extensionsDir, plugin.id);
     if (!existsSync(pluginDir)) {
+      if (plugin.optional) {
+        console.warn(
+          `[electron-builder-hooks] Optional OpenClaw plugin is missing from runtime: ${plugin.id}. Continuing packaging.`,
+        );
+        continue;
+      }
       missing.push(plugin.id);
     }
   }
