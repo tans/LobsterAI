@@ -38,7 +38,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24.x'
-      - run: npm ci
+      - run: npm install
 
       - name: Setup OpenClaw Runtime
         run: |
@@ -71,7 +71,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24.x'
-      - run: npm ci
+      - run: npm install
 
       - name: Setup Python Runtime
         run: npm run setup:python-runtime
@@ -104,7 +104,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-0 libnotify4 libnss3 libxss1 libxtst6 xdg-utils libatspi2.0-0 libuuid1 libsecret-1-0
 
-      - run: npm ci
+      - run: npm install
 
       - name: Build Linux
         run: npm run dist:linux
