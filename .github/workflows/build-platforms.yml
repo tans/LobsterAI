@@ -38,6 +38,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24.x'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
       - run: npm install
 
       - name: Setup OpenClaw Runtime
@@ -71,6 +75,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24.x'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
       - run: npm install
 
       - name: Setup Python Runtime
@@ -98,6 +106,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24.x'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
 
       - name: Install Dependencies
         run: |
