@@ -16,7 +16,6 @@ import CoworkPermissionModal from './components/cowork/CoworkPermissionModal';
 import CoworkQuestionWizard from './components/cowork/CoworkQuestionWizard';
 import EngineStartupOverlay from './components/cowork/EngineStartupOverlay';
 import { McpView } from './components/mcp';
-import PrivacyDialog from './components/PrivacyDialog';
 import { ScheduledTasksView } from './components/scheduledTasks';
 import Settings, { type SettingsOpenOptions } from './components/Settings';
 import Sidebar from './components/Sidebar';
@@ -24,7 +23,6 @@ import { SkillsView } from './components/skills';
 import Toast from './components/Toast';
 import AppUpdateBadge from './components/update/AppUpdateBadge';
 import AppUpdateModal from './components/update/AppUpdateModal';
-import WelcomeDialog from './components/WelcomeDialog';
 import WindowTitleBar from './components/window/WindowTitleBar';
 import { defaultConfig, getProviderDisplayName } from './config';
 import type { ApiConfig } from './services/api';
@@ -75,8 +73,6 @@ const App: React.FC = () => {
     errorMessage: null,
   });
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [privacyAgreed, setPrivacyAgreed] = useState<boolean | null>(null);
-  const [showWelcome, setShowWelcome] = useState(false);
   const [enterpriseConfig, setEnterpriseConfig] = useState<{
     ui?: Record<string, 'hide' | 'disable' | 'readonly'>;
     disableUpdate?: boolean;
@@ -196,10 +192,6 @@ const App: React.FC = () => {
           dispatch(setDefaultSelectedModel(preferredModel));
         }
         mark('model resolution done');
-
-        const agreed = await window.electron.store.get('privacy_agreed');
-        setPrivacyAgreed(agreed === true);
-        mark('privacy check done');
 
         setIsInitialized(true);
         mark('shell ready');
@@ -395,10 +387,6 @@ const App: React.FC = () => {
     };
   }, [showToast]);
 
-  const handleShowLogin = useCallback(() => {
-    showToast(i18nService.t('featureInDevelopment'));
-  }, [showToast]);
-
   const runUpdateCheck = useCallback(async () => {
     try {
       const result = await window.electron.appUpdate.checkNow({ userId: authUser?.yid });
@@ -479,27 +467,6 @@ const App: React.FC = () => {
     shouldInstallReadyUpdateRef.current = false;
     await window.electron.appUpdate.retryDownload();
   }, [updateInfo]);
-
-  const handlePrivacyAccept = useCallback(async () => {
-    await window.electron.store.set('privacy_agreed', true);
-    setPrivacyAgreed(true);
-    setShowWelcome(true);
-  }, []);
-
-  const handlePrivacyReject = useCallback(() => {
-    // 立刻隐藏窗口，让用户感觉立即关闭
-    window.electron.window.close();
-  }, []);
-
-  const handleWelcomeClose = useCallback(() => setShowWelcome(false), []);
-  const handleWelcomeLogin = useCallback(async () => {
-    setShowWelcome(false);
-    await authService.login();
-  }, []);
-  const handleWelcomeCustomModel = useCallback(() => {
-    setShowWelcome(false);
-    handleShowSettings({ initialTab: 'model' });
-  }, [handleShowSettings]);
 
   const handlePermissionResponse = useCallback(async (result: CoworkPermissionResult) => {
     if (!pendingPermission) return;
@@ -754,7 +721,6 @@ const App: React.FC = () => {
       )}
       <div className="flex flex-1 min-h-0 overflow-hidden">
         <Sidebar
-          onShowLogin={handleShowLogin}
           onShowSettings={handleShowSettings}
           activeView={mainView}
           onShowSkills={handleShowSkills}
@@ -766,7 +732,6 @@ const App: React.FC = () => {
           isCollapsed={isSidebarCollapsed}
           onToggleCollapse={handleToggleSidebar}
           updateBadge={!isSidebarCollapsed ? updateBadge : null}
-          hideLogin={enterpriseConfig?.ui?.login === 'hide'}
         />
         <div className={`flex-1 min-w-0 py-1.5 pr-1.5 ${isSidebarCollapsed ? 'pl-1.5' : ''}`}>
           <div className="relative h-full min-h-0 rounded-xl bg-background overflow-hidden">
@@ -804,7 +769,7 @@ const App: React.FC = () => {
               />
             ) : (
               <CoworkView
-                onRequestAppSettings={privacyAgreed === true && !showWelcome ? handleShowSettings : undefined}
+                onRequestAppSettings={handleShowSettings}
                 onShowSkills={handleShowSkills}
                 isSidebarCollapsed={isSidebarCollapsed}
                 onToggleSidebar={handleToggleSidebar}
@@ -840,19 +805,6 @@ const App: React.FC = () => {
         />
       )}
       {permissionModal}
-      {privacyAgreed === false && (
-        <PrivacyDialog
-          onAccept={handlePrivacyAccept}
-          onReject={handlePrivacyReject}
-        />
-      )}
-      {showWelcome && (
-        <WelcomeDialog
-          onLogin={handleWelcomeLogin}
-          onCustomModel={handleWelcomeCustomModel}
-          onClose={handleWelcomeClose}
-        />
-      )}
     </div>
   );
 };
