@@ -53,7 +53,7 @@ jobs:
           fi
 
       - name: Build macOS
-        run: npm run dist:mac
+        run: npm run dist:mac -- --publish never
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
 
@@ -83,7 +83,7 @@ jobs:
           LOBSTERAI_PORTABLE_PYTHON_ARCHIVE: ${{ secrets.WINDOWS_PYTHON_ARCHIVE }}
 
       - name: Build Windows
-        run: npm run dist:win
+        run: npm run dist:win -- --publish never
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
 
@@ -114,7 +114,7 @@ jobs:
       - run: npm install
 
       - name: Build Linux
-        run: npm run dist:linux
+        run: npm run dist:linux -- --publish never
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
 
