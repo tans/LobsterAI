@@ -27,26 +27,26 @@ const isTestMode = (): boolean => {
  */
 export const getServerApiBaseUrl = (): string => {
   return isTestMode()
-    ? 'https://lobsterai-server.inner.youdao.com'
-    : 'https://lobsterai-server.youdao.com';
+    ? 'https://lobsterai-server.inner.geekclaw.ai'
+    : 'https://lobsterai-server.geekclaw.ai';
 };
 
 export const getUpdateCheckUrl = (): string => (
   isTestMode()
-    ? 'https://api-overmind.youdao.com/openapi/get/luna/hardware/lobsterai/test/update'
-    : 'https://api-overmind.youdao.com/openapi/get/luna/hardware/lobsterai/prod/update'
+    ? 'https://api-overmind.geekclaw.ai/openapi/get/luna/hardware/lobsterai/test/update'
+    : 'https://api-overmind.geekclaw.ai/openapi/get/luna/hardware/lobsterai/prod/update'
 );
 
 export const getManualUpdateCheckUrl = (): string => (
   isTestMode()
-    ? 'https://api-overmind.youdao.com/openapi/get/luna/hardware/lobsterai/test/update-manual'
-    : 'https://api-overmind.youdao.com/openapi/get/luna/hardware/lobsterai/prod/update-manual'
+    ? 'https://api-overmind.geekclaw.ai/openapi/get/luna/hardware/lobsterai/test/update-manual'
+    : 'https://api-overmind.geekclaw.ai/openapi/get/luna/hardware/lobsterai/prod/update-manual'
 );
 
 export const getFallbackDownloadUrl = (): string => (
   isTestMode()
-    ? 'https://lobsterai.inner.youdao.com/#/download-list'
-    : 'https://lobsterai.youdao.com/#/download-list'
+    ? 'https://lobsterai.inner.geekclaw.ai/#/download-list'
+    : 'https://lobsterai.geekclaw.ai/#/download-list'
 );
 
 export const getSkillStoreUrl = (): string => (
