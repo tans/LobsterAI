@@ -11,17 +11,17 @@ const isTestMode = () => {
 
 // 自动更新
 export const getUpdateCheckUrl = () => isTestMode()
-  ? 'https://api-overmind.youdao.com/openapi/get/luna/hardware/lobsterai/test/update'
-  : 'https://api-overmind.youdao.com/openapi/get/luna/hardware/lobsterai/prod/update';
+  ? 'https://api-overmind.geekclaw.ai/openapi/get/luna/hardware/lobsterai/test/update'
+  : 'https://api-overmind.geekclaw.ai/openapi/get/luna/hardware/lobsterai/prod/update';
 
 // 手动检查更新
 export const getManualUpdateCheckUrl = () => isTestMode()
-  ? 'https://api-overmind.youdao.com/openapi/get/luna/hardware/lobsterai/test/update-manual'
-  : 'https://api-overmind.youdao.com/openapi/get/luna/hardware/lobsterai/prod/update-manual';
+  ? 'https://api-overmind.geekclaw.ai/openapi/get/luna/hardware/lobsterai/test/update-manual'
+  : 'https://api-overmind.geekclaw.ai/openapi/get/luna/hardware/lobsterai/prod/update-manual';
 
 export const getFallbackDownloadUrl = () => isTestMode()
-  ? 'https://lobsterai.inner.youdao.com/#/download-list'
-  : 'https://lobsterai.youdao.com/#/download-list';
+  ? 'https://lobsterai.inner.geekclaw.ai/#/download-list'
+  : 'https://lobsterai.geekclaw.ai/#/download-list';
 
 // Skill 商店
 export const getSkillStoreUrl = () => isTestMode()
